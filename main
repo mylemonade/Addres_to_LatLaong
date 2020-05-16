@@ -1,0 +1,15 @@
+from googlemaps import Client as GoogleMaps
+import pandas as pd 
+gmaps = GoogleMaps('Google API HERE')
+
+addresses = pd.read_csv("address.csv")
+addresses.head()
+
+addresses['long'] = ""
+addresses['lat'] = ""
+
+for x in range(len(addresses)):
+    geocode_result = gmaps.geocode(addresses['FullAddress'][x])
+    addresses['lat'][x] = geocode_result[0]['geometry']['location'] ['lat']
+    addresses['long'][x] = geocode_result[0]['geometry']['location']['lng']
+addresses.head()
